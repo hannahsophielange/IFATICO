@@ -814,7 +814,7 @@ IFATICO_change <- IFATICO %>%
 table(IFATICO_change$fss_change)
 table(IFATICO_change$Group, IFATICO_change$fss_change)
 
-IFATICO_change <- IFATICO_change %>%
+IFATICO_change <- IFATICO_change %>% filter(!is.na(fss_change)) %>%
   group_by(id) %>%
   mutate(respondstatus = (ifelse(fss_change <= -6.3, "Responder", "Non_Responder")))
 
@@ -823,7 +823,7 @@ table_responder
 chisq.test(table_responder, correct = FALSE)
 
 
-IFATICO_change <- IFATICO_change %>%
+IFATICO_change <- IFATICO_change %>% filter(!is.na(fss_change)) %>%
   group_by(id) %>%
   mutate(worsening = (ifelse(fss_change > 0, "Worsening", "No Worsening")))
 
@@ -836,7 +836,7 @@ chisq.test(table_worsening, correct = FALSE)
 IFATICO_T1 <- subset(IFATICO, redcap_event_name == "t1")
 table(IFATICO_T1$pgic_1, IFATICO_T1$Group)
 
-IFATICO_T1 <- IFATICO_T1 %>%
+IFATICO_T1 <- IFATICO_T1 %>% filter(!is.na(pgic_1)) %>%
   group_by(id) %>%
   mutate(pgicstatus = (ifelse(pgic_1 %in% c(0, 1), "Much improved", "Not much improved")))
 
